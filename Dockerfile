@@ -15,5 +15,6 @@ RUN apt-get install -y python3.7
 RUN pip3 install --trusted-host pypi.python.org -r requirements.txt
 
 # Optional
+RUN apt-get install -y git
 RUN apt-get install -y vim
 COPY .vimrc /root
