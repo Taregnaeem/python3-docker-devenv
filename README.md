@@ -155,8 +155,69 @@ This specifies Docker Image with format `IMAGE:TAG`.
 Besides above, there are many Dockerfile orders, so please check [Dockerfile reference](https://docs.docker.com/engine/reference/builder/).
 
 ## <a id="optional">Optional</a>
-### Install git
+### Install and Configure git
 You already have installed git because it is specified in Dockerfile.
+For the purpose of using git in container, let's configure it.
+
+#### Set up git
+First of all, you should add your name and your email to git config.
+```
+$ git config --global user.email "you@example.com"
+$ git config --global user.name "Your Name"
+```
+If you confirm git config parameters, use [git config](https://git-scm.com/docs/git-config) command with list option.
+```
+$ git config --list
+```
+
+#### Set up ssh
+When moved home directory, is there `.ssh` directory? If not, make it first.
+```
+$ cd ~
+$ ls -a
+$ mkdir .ssh # if there is no .ssh directory
+$ cd .ssh
+```
+
+And then, generate private key and public key with `ssh-keygen` command.
+```
+$ ssh-keygen -t rsa
+```
+Syntax of this command is below:
+* ssh-keygen -t ${ALGORITHM}  
+
+If you specify `t` option, you can choose generation algorithm such as RSA or DSA etc…
+
+When you execute this command, it asks you some questions:
+##### Enter file in which to save the key(/root/.ssh/id_rsa):
+* Specify path including filename where you want to save keys, for example `/root/temp/id_rsa`.
+If specified directory doesn't exist, ssh-keygen command fails.  
+
+##### Enter passphrase (empty for o passphrase):  
+* Passphrase is a string of characters, which is longer than usual password (minimum five characters but 20 characters preferably).
+It is used in an encryption or a decryption of private key.
+
+
+
+After generating keys, copy public key strings and register it on GitHub.
+
+Finally, run following command which attempts to ssh to GitHub.
+```
+$ ssh -T git@github.com
+```
+If you are asked to continue connecting, answer *yes* and if you specified passphrase type it and press enter. If you didn't create passphrase, it is not required to do so.
+```
+root@01cb00143067:~/.ssh# ssh -T git@github.com
+The authenticity of host 'github.com (192.30.255.113)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'github.com,192.30.255.113' (RSA) to the list of known hosts.
+Enter passphrase for key '/root/.ssh/id_rsa':
+Hi username! You've successfully authenticated, but GitHub does not provide shell access.
+```
+Could you confirmed the last message? Fantastic. From now, you can pull your private repository in this container.
+
+It doesn't work? Please check [Testing your SSH connection](https://help.github.com/articles/testing-your-ssh-connection/).
 
 ### Install python packages
 This repository has `requirements.txt`.  
