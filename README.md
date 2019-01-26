@@ -4,6 +4,8 @@ This repository is for a developer who is new to Docker and
 wants to write python3 codes on ubuntu in docker container.  
 If you finish this tutorial, you will be able to develop with python3 in docker container.
 
+![docker-python](https://user-images.githubusercontent.com/19743841/51781628-8a278900-215e-11e9-9290-eb4b4a097023.png)
+
 ## Table of Contents
 * [Version Details](#version-details)
 * [Requirements](#requirements)
