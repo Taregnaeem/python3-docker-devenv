@@ -6,7 +6,7 @@ If you finish this tutorial, you will be able to develop with python3 in docker 
 
 ![docker-python](https://user-images.githubusercontent.com/19743841/51781628-8a278900-215e-11e9-9290-eb4b4a097023.png)
 
-## Table of Contents
+## Index
 * [Why Python on Docker Container?](#why-python-on-docker-container)
 * [Installed Software Version Details](#installed-software-version-details)
 * [Prerequisites](#prerequisites)
@@ -14,6 +14,7 @@ If you finish this tutorial, you will be able to develop with python3 in docker 
 * [Usage](#usage)
 * [How to Use Docker Commands](#how-to-use-docker-commands)
 * [How to Configure Dockerfile](#how-to-configure-dockerfile)
+* [Why Does Quick Start Work?](#why-does-quick-start-work)
 * [Optional](#optional)
 
 ## Why Python on Docker Container?
@@ -41,6 +42,7 @@ Firstly, you need to clone this repository and go into the directory.
 $ git clone git@github.com:resotto/python3-docker-devenv.git
 $ cd python3-docker-devenv
 ```
+
 Secondly, [`docker build`](https://docs.docker.com/engine/reference/commandline/build/) creates image from Dockerfile and
 [`docker run`](https://docs.docker.com/engine/reference/commandline/run/) starts new container from image.
 ```
@@ -48,6 +50,7 @@ $ docker build -t ubuntu-python3:0.0.1 .
 $ docker run -it ubuntu-python3:0.0.1 python3 hello.py
 Hello python3-docker-devenv!
 ```
+
 These commands syntax are below:
 * [`docker build`](https://docs.docker.com/engine/reference/commandline/build/) -t ${NAME:TAG} ${Build Context}
 * [`docker run`](https://docs.docker.com/engine/reference/commandline/run/) -it ${IMAGE NAME} ${COMMAND}
@@ -70,6 +73,7 @@ with `--volumes-from ${DATA CONTAINER NAME}` easily, which is [`docker run`](htt
 $ docker run -v /app --name pydata ubuntu:18.04 echo "Data-only container for python3"
 Data-only container for python3
 ```
+
 This command syntax is below:
 * [`docker run`](https://docs.docker.com/engine/reference/commandline/run/) -v ${VOLUME DIRECTORY} --name ${CONTAINER NAME} ${IMAGE NAME} ${COMMAND}
 
@@ -86,6 +90,7 @@ ssh command.
 ```
 $ docker run -it --name ubuntu-python3 --volumes-from pydata ubuntu-python3:0.0.1
 ```
+
 In the container you can also use python interactive interpreter.
 ```
 root@51c45890a7ed:/app# python3
@@ -100,6 +105,7 @@ If you want to confirm container status, you can use [`docker ps`](https://docs.
 ```
 $ docker ps -a
 ```
+
 If you specify `q` option, it returns only container ids, so that you can do something
 like this when you want to remove all containers.
 ```
@@ -141,7 +147,7 @@ There are some orders in Dockerfile.
 ### Orders of Dockerfile
 #### [`FROM`](https://docs.docker.com/engine/reference/builder/#from)  
 - [`FROM`](https://docs.docker.com/engine/reference/builder/#from) **must be the first order in Dockerfile**.  
-This specifies Docker Image with format `IMAGE:TAG`.  
+This specifies Docker Image with format `IMAGE[:TAG]`.  
  If `TAG` is omitted, it will be `latest`, but **`latest` cannot be recommended because the version of the tag may change in the future**.
 
 
@@ -157,6 +163,168 @@ This specifies Docker Image with format `IMAGE:TAG`.
 
 Besides above, there are many Dockerfile orders, so please check [Dockerfile reference](https://docs.docker.com/engine/reference/builder/).
 
+## Why Does Quick Start Work?
+What you did at [Quick Start](#quick-start) was just two things:
+1. Created Data Container.
+2. Created and ran container whose data is based on the container created by step 1.
+
+In step 1, when you did [`docker run ubuntu:18.04`]((https://docs.docker.com/engine/reference/commandline/run/), whose options are omitted here, Docker Daemon looks for the image from local first. If it isn't there, Docker Daemon tries to pull it from Registry, which is [Docker Hub](https://hub.docker.com/) by default.  
+So you just pulled [`ubuntu:18.04`]((https://hub.docker.com/_/ubuntu?tab=description) image from Docker Hub.
+
+<details><summary>What is Registry?</summary><div>
+Registry is just a service that hosts and distributes Docker images.</div></details><br>
+
+<details><summary>What is Docker Daemon?</summary><div>
+Docker Daemon is responsible for creating, running and monitoring containers, and building and saving images.  
+Although host OS usually starts Docker Daemon, you also can start it with `docker daemon`.
+</div></details><br>
+
+How about `resotto/ubuntu-python3:0.0.1` in step2? Is this pulled from Docker Hub too? Exactly. Indeed this image was build by you if you passed through [Usage](#usage), actually it had already been pushed and hosted by Docker Hub. You can check it at [this page](https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3)!  
+
+While the format of the ubuntu image [`ubuntu:18.04`]((https://hub.docker.com/_/ubuntu?tab=description) is `REPOSITORYNAME[:TAG]`, the format of the original image [`resotto/ubuntu-python3:0.0.1`]((https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3) is `USERNAME/REPOSITORYNAME[:TAG]`. What is the `USERNAME` of the ubuntu image?  
+ In fact, the ubuntu image doesn't have `USERNAME`.
+
+<details><summary>What is Repository?</summary><div>
+When falling into Docker category, Repository means set of relative images. Usually, it offers various versions of the same application or service. In short, images belong to Repository.
+</div></details><br>
+
+This is because the ubuntu image [`ubuntu:18.04`]((https://hub.docker.com/_/ubuntu?tab=description) belongs *"root"* namespace, which is managed by Docker Inc. *"Root"* namespace is reserved for official images of prevailing softwares and distributions.  
+On the other hand, original image such as [`resotto/ubuntu-python3:0.0.1`]((https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3) belongs *"user"* namespace. This type of image is what is uploaded to Docker Hub by users.
+
+Thus, you can judge whether it is official image or not, due to its format. For example, [`resotto/ubuntu-python3:0.0.1`]((https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3) has `USERNAME` "resotto" so this is uploaded by the user, not official image.
+
+By the way, how was it uploaded to Docker Hub?  
+You need follow 4 steps in order to upload image to Docker Hub:
+1. Signup [Docker Hub](https://hub.docker.com/signup).
+2. Login Docker Hub
+3. Tag image as appropriate Repository name.
+4. Push the image to Docker Hub.
+
+### 1. Signup Docker Hub
+In order to host your original image, signup [Docker Hub](https://hub.docker.com/signup) first.
+
+### 2. Login Docker Hub
+Run [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) and then type your Docker ID and password.
+```
+$ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: resotto
+Password:
+Login Succeeded
+```
+
+If you have already succeeded at login, you don't have to do anything.
+```
+$ docker login
+Authenticating with existing credentials...
+Login Succeeded
+```
+
+When you logout of your registry, you can run [`docker logout`](https://docs.docker.com/engine/reference/commandline/logout/).
+
+### 3. Tag image as appropriate Repository name
+If you passed through [Usage](#usage), did you remember build image from Dockerfile as follows?
+```
+$ docker build -t ubuntu-python3:0.0.1 .
+```
+
+Undoubtedly, you built image from Dockerfile but simultaneously, you also did tag image as `ubuntu-python3:0.0.1`. This tag has no `USERNAME`, so let's tag image as the name which includes your Docker ID:
+```
+$ docker build -t resotto/ubuntu-python3:0.0.1 .
+```
+
+After tagging the image, run [`docker images`](https://docs.docker.com/engine/reference/commandline/images/) or [`docker image ls`](https://docs.docker.com/engine/reference/commandline/image_ls/) in order to confirm that the image exists.
+```
+$ docker images
+```
+
+### 4. Push the image to Docker Hub
+After confirming the image you tagged exists, let's push it to Docker Hub. Please run [`docker push`](https://docs.docker.com/engine/reference/commandline/push/).
+```
+$ docker push resotto/ubuntu-python3:0.0.1
+The push refers to repository [docker.io/resotto/ubuntu-python3]
+5ce5f63f24c0: Pushed
+d8d3b3e8a557: Pushed
+0e6f3b804d02: Pushed
+8b32fa684eea: Pushed
+327a00a42c3b: Pushed
+1c77a0c741d2: Pushed
+773f076615b0: Pushed
+75c251c8063a: Pushed
+c9d22d4a720c: Pushed
+37907c98853d: Pushed
+27a216ffe825: Mounted from library/ubuntu
+9e9d3c3a7458: Mounted from library/ubuntu
+7604c8714555: Mounted from library/ubuntu
+adcb570ae9ac: Mounted from library/ubuntu
+0.0.1: digest: sha256:893e46dffdde445500c05b6200b0af0771412c1a97c774ca17ade29f61b8b25e size: 3245
+```
+
+When you re-built the image and pushed it, the result of running [`docker push`](https://docs.docker.com/engine/reference/commandline/push/) was below:
+```
+$ docker push resotto/ubuntu-python3:0.0.1
+The push refers to repository [docker.io/resotto/ubuntu-python3]
+5ce5f63f24c0: Layer already exists
+d8d3b3e8a557: Layer already exists
+0e6f3b804d02: Layer already exists
+8b32fa684eea: Layer already exists
+327a00a42c3b: Layer already exists
+1c77a0c741d2: Layer already exists
+773f076615b0: Layer already exists
+75c251c8063a: Layer already exists
+c9d22d4a720c: Layer already exists
+37907c98853d: Layer already exists
+27a216ffe825: Layer already exists
+9e9d3c3a7458: Layer already exists
+7604c8714555: Layer already exists
+adcb570ae9ac: Layer already exists
+0.0.1: digest: sha256:893e46dffdde445500c05b6200b0af0771412c1a97c774ca17ade29f61b8b25e size: 3245
+```
+
+If you omitted your username when running [`docker push`](https://docs.docker.com/engine/reference/commandline/push/), it would fail. Because *"root"* namespace is reserved for official images so that you cannot push it.
+```
+$ docker push ubuntu-python3:0.0.1
+The push refers to repository [docker.io/library/ubuntu-python3]
+ab40990d7169: Preparing
+57c7268ba395: Preparing
+2b8e0e911375: Preparing
+bbf5176f74b4: Preparing
+a862c3e0e8f6: Preparing
+61cf449bba00: Waiting
+0f4f1d0eed43: Waiting
+029c04e04f41: Waiting
+03b5d5310008: Waiting
+665e12eb9565: Waiting
+27a216ffe825: Waiting
+9e9d3c3a7458: Waiting
+7604c8714555: Waiting
+adcb570ae9ac: Waiting
+denied: requested access to the resource is denied
+```
+
+If you forgot to login, following message would be displayed.
+```
+$ docker push resotto/ubuntu-python3:0.0.1
+The push refers to repository [docker.io/resotto/ubuntu-python3]
+5ce5f63f24c0: Layer already exists
+d8d3b3e8a557: Layer already exists
+0e6f3b804d02: Layer already exists
+8b32fa684eea: Layer already exists
+327a00a42c3b: Layer already exists
+1c77a0c741d2: Layer already exists
+773f076615b0: Layer already exists
+75c251c8063a: Layer already exists
+c9d22d4a720c: Layer already exists
+37907c98853d: Layer already exists
+27a216ffe825: Layer already exists
+9e9d3c3a7458: Layer already exists
+7604c8714555: Layer already exists
+adcb570ae9ac: Layer already exists
+errors:
+denied: requested access to the resource is denied
+unauthorized: authentication required
+```
+
 ## Optional
 ### Install and Configure git
 You already have installed git because it is specified in Dockerfile.
@@ -168,6 +336,7 @@ First of all, you should add your name and your email to git config.
 $ git config --global user.email "you@example.com"
 $ git config --global user.name "Your Name"
 ```
+
 If you confirm git config parameters, use [git config](https://git-scm.com/docs/git-config) with list option.
 ```
 $ git config --list
@@ -186,6 +355,7 @@ And then, generate private key and public key with `ssh-keygen`.
 ```
 $ ssh-keygen -t rsa
 ```
+
 Syntax of this command is below:
 * ssh-keygen -t ${ALGORITHM}  
 
@@ -208,7 +378,9 @@ At first, copy the result of executing command below.
 ```
 $ cat id_rsa.pub
 ```
+
 And then, register it on Github following instructions.
+
 ###### Open your GitHub account settings.
 ![click-settings](https://user-images.githubusercontent.com/19743841/51783793-7ee65480-2182-11e9-847b-3e54b647fa01.png)
 
@@ -218,14 +390,11 @@ And then, register it on Github following instructions.
 ###### Click `New SSH key`.
 ![click-new-ssh-key](https://user-images.githubusercontent.com/19743841/51783792-7ee65480-2182-11e9-84b5-11dbfa51ba21.png)
 
-###### Specify title and paste public key strings and click `Add SSH key`.
+###### Specify Title, paste public key strings in Key and click `Add SSH key`.
 ![click-add-ssh-key](https://user-images.githubusercontent.com/19743841/51783858-b3a6db80-2183-11e9-9c56-21055d61c3d3.png)
 
-Finally, run following command, which attempts to ssh to GitHub.
-```
-$ ssh -T git@github.com
-```
-If you are asked to continue connecting, answer *yes* and if you specified passphrase type it and press enter. If you didn't create passphrase, it is not required.
+Finally, run `ssh -T git@github.com`, which attempts to ssh to GitHub.  
+If you are asked to continue connecting, answer *yes* and if you specified passphrase, type it and press enter. If you didn't create passphrase, it is not required.
 ```
 root@01cb00143067:~/.ssh# ssh -T git@github.com
 The authenticity of host 'github.com (192.30.255.113)' can't be established.
@@ -235,7 +404,8 @@ Warning: Permanently added 'github.com,192.30.255.113' (RSA) to the list of know
 Enter passphrase for key '/root/.ssh/id_rsa':
 Hi resotto! You've successfully authenticated, but GitHub does not provide shell access.
 ```
-Could you confirm *"Hi username! You've successfully authenticated, but GitHub does not provide shell access."*? Fantastic! From now, you can pull your private repository in this container.
+
+Could you confirm the message *"Hi username!"*? Fantastic! From now, you can pull your private repository in this container.
 
 It doesn't work? Please check [Testing your SSH connection](https://help.github.com/articles/testing-your-ssh-connection/).
 
