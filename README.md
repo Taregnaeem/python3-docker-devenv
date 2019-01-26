@@ -209,7 +209,17 @@ At first, copy the result of executing command below.
 $ cat id_rsa.pub
 ```
 And then, register it on Github following instructions.
+###### Open your GitHub account settings.
+![click-settings](https://user-images.githubusercontent.com/19743841/51783793-7ee65480-2182-11e9-847b-3e54b647fa01.png)
 
+###### Click `SSH and GPG keys`.
+![click-ssh-and-gpg-keys](https://user-images.githubusercontent.com/19743841/51783794-7ee65480-2182-11e9-8787-0ad6046b6da9.png)
+
+###### Click `New SSH key`.
+![click-new-ssh-key](https://user-images.githubusercontent.com/19743841/51783792-7ee65480-2182-11e9-84b5-11dbfa51ba21.png)
+
+###### Specify title and paste public key strings and click `Add SSH key`.
+![click-add-ssh-key](https://user-images.githubusercontent.com/19743841/51783791-7e4dbe00-2182-11e9-8057-919cd1ba3858.png)
 
 Finally, run following command, which attempts to ssh to GitHub.
 ```
