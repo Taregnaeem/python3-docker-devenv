@@ -219,7 +219,7 @@ And then, register it on Github following instructions.
 ![click-new-ssh-key](https://user-images.githubusercontent.com/19743841/51783792-7ee65480-2182-11e9-84b5-11dbfa51ba21.png)
 
 ###### Specify title and paste public key strings and click `Add SSH key`.
-![click-add-ssh-key](https://user-images.githubusercontent.com/19743841/51783791-7e4dbe00-2182-11e9-8057-919cd1ba3858.png)
+![click-add-ssh-key](https://user-images.githubusercontent.com/19743841/51783858-b3a6db80-2183-11e9-9c56-21055d61c3d3.png)
 
 Finally, run following command, which attempts to ssh to GitHub.
 ```
