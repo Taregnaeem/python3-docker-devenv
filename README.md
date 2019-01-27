@@ -203,6 +203,12 @@ You need follow 4 steps in order to upload image to Docker Hub:
 ### 1. Signup Docker Hub
 In order to host your original image, signup [Docker Hub](https://hub.docker.com/signup) first.
 
+Click "Sign Up" in [Docker Hub](https://hub.docker.com/signup).
+![click-signup](https://user-images.githubusercontent.com/19743841/51794288-ca484380-2212-11e9-9e93-2b33e238ccce.png)
+
+And then, type your info into the form and click "Sign Up".
+![type-your-info](https://user-images.githubusercontent.com/19743841/51794289-ca484380-2212-11e9-8bb6-2297dfe7510b.png)
+
 ### 2. Login Docker Hub
 Run [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) and then type your Docker ID and password.
 ```
