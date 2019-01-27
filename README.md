@@ -1,13 +1,13 @@
-# python3-docker-devenv
+<h1 align="center">python3-docker-devenv</h1>
 
-This repository is for a developer who is new to Docker and
-wants to write python3 codes on ubuntu in docker container.  
-If you finish this tutorial, you will be able to develop with python3 in docker container.
-
-![docker-python](https://user-images.githubusercontent.com/19743841/51781628-8a278900-215e-11e9-9290-eb4b4a097023.png)
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/19743841/51781628-8a278900-215e-11e9-9290-eb4b4a097023.png">
+</div>
 
 ## Index
 * [Why Python on Docker Container?](#why-python-on-docker-container)
+* [Who Is This Repository Designed for?](#who-is-this-repository-designed-for)
+* [What You Can Learn with This Repository](#what-you-can-learn-with-this-repository)
 * [Installed Software Version Details](#installed-software-version-details)
 * [Prerequisites](#prerequisites)
 * [Quick Start](#quick-start)
@@ -18,7 +18,15 @@ If you finish this tutorial, you will be able to develop with python3 in docker 
 * [Optional](#optional)
 
 ## Why Python on Docker Container?
-You need not to create virtual environments with `venv` because you can handle them respectively as a container.  
+You need not to create virtual environments with `venv` because you can handle them respectively as a container.
+
+## Who Is This Repository Designed for?
+* A developer who feels that [Docker Tutorial](https://docs.docker.com/get-started/) may be too difficult to understand.
+* A developer who writes Python codes and is new to Docker.
+
+## What You Can Learn with This Repository
+* The way to handle Docker Container.
+* The concepts of Docker.
 
 ## Installed Software Version Details
 * ubuntu: 18.04.1 LTS
@@ -181,17 +189,17 @@ Although host OS usually starts Docker Daemon, you also can start it with `docke
 
 How about `resotto/ubuntu-python3:0.0.1` in step2? Is this pulled from Docker Hub too? Exactly. Indeed this image was build by you if you passed through [Usage](#usage), actually it had already been pushed and hosted by Docker Hub. You can check it at [this page](https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3)!  
 
-While the format of the ubuntu image [`ubuntu:18.04`]((https://hub.docker.com/_/ubuntu?tab=description) is `REPOSITORYNAME[:TAG]`, the format of the original image [`resotto/ubuntu-python3:0.0.1`]((https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3) is `USERNAME/REPOSITORYNAME[:TAG]`. What is the `USERNAME` of the ubuntu image?  
+While the format of the ubuntu image [`ubuntu:18.04`](https://hub.docker.com/_/ubuntu?tab=description) is `REPOSITORYNAME[:TAG]`, the format of the original image [`resotto/ubuntu-python3:0.0.1`](https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3) is `USERNAME/REPOSITORYNAME[:TAG]`. What is the `USERNAME` of the ubuntu image?  
  In fact, the ubuntu image doesn't have `USERNAME`.
 
 <details><summary>What is Repository?</summary><div>
 When falling into Docker category, Repository means set of relative images. Usually, it offers various versions of the same application or service. In short, images belong to Repository.
 </div></details><br>
 
-This is because the ubuntu image [`ubuntu:18.04`]((https://hub.docker.com/_/ubuntu?tab=description) belongs *"root"* namespace, which is managed by Docker Inc. *"Root"* namespace is reserved for official images of prevailing softwares and distributions.  
-On the other hand, original image such as [`resotto/ubuntu-python3:0.0.1`]((https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3) belongs *"user"* namespace. This type of image is what is uploaded to Docker Hub by users.
+This is because the ubuntu image [`ubuntu:18.04`](https://hub.docker.com/_/ubuntu?tab=description) belongs *"root"* namespace, which is managed by Docker Inc. *"Root"* namespace is reserved for official images of prevailing softwares and distributions.  
+On the other hand, original image such as [`resotto/ubuntu-python3:0.0.1`](https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3) belongs *"user"* namespace. This type of image is what is uploaded to Docker Hub by users.
 
-Thus, you can judge whether it is official image or not, due to its format. For example, [`resotto/ubuntu-python3:0.0.1`]((https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3) has `USERNAME` "resotto" so this is uploaded by the user, not official image.
+Thus, you can judge whether it is official image or not, due to its format. For example, [`resotto/ubuntu-python3:0.0.1`](https://cloud.docker.com/u/resotto/repository/docker/resotto/ubuntu-python3) has `USERNAME` "resotto" so this is uploaded by the user, not official image.
 
 By the way, how was it uploaded to Docker Hub?  
 You need follow 4 steps in order to upload image to Docker Hub:
