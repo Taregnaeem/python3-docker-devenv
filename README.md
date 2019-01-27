@@ -1,7 +1,13 @@
 <h1 align="center">python3-docker-devenv</h1>
 
 <div align="center">
-  <img src="https://user-images.githubusercontent.com/19743841/51781628-8a278900-215e-11e9-9290-eb4b4a097023.png">
+  <p>
+    <img src="https://user-images.githubusercontent.com/19743841/51781628-8a278900-215e-11e9-9290-eb4b4a097023.png">
+  </p>
+  <p>
+    <a href="https://twitter.com/home?status=Python%20Docker%20Development%20Environment%20by%20%40resotto3%20https://github.com/resotto/python3-docker-devenv"><img src="https://img.shields.io/badge/twitter-tweet-blue.svg"/></a>
+    <a href="https://twitter.com/resotto3"><img src="https://img.shields.io/badge/feedback-@resotto3-blue.svg" /></a>
+  </p>
 </div>
 
 ## Index
